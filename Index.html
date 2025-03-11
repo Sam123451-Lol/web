@@ -1,18 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Cuestionario de Ecologia</title>
-    <link rel="stylesheet" type="text/css" href="estilo.css">
-    <meta name="viewport" content="width=device-width, initial-scalet=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Ciencias Naturales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .question input {
+            margin-right: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border: 1px solid #b3e0ff;
+            border-radius: 5px;
+        }
+        .result p {
+            margin: 0;
+            color: #333;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            .question h2 {
+                font-size: 1em;
+            }
+        }
+    </style>
 </head>
 <body>
-<section class="home">
-    <div class="in-flex"></div>
-    <div classs="in-flex">
-         <div>La ecología es la rama de la biología que estudia las relaciones de los diferentes seres vivos entre sí y la relación de estos con el entorno: «la biología de los ecosistemas».​ Estudia cómo estas interacciones entre los organismos y su ambiente afectan a propiedades como la distribución o la abundancia.</div>
-         <div>La ecología es la rama de la biología que estudia las relaciones de los diferentes seres vivos entre sí y la relación de estos con el entorno: «la biología de los ecosistemas».​ Estudia cómo estas interacciones entre los organismos y su ambiente afectan a propiedades como la distribución o la abundancia.</div>	
-</section>	
-<p>Página de prueba</p>
+    <div class="container">
+        <h1>Cuestionario de Ciencias Naturales</h1>
+        <form id="quizForm">
+            <div class="question">
+                <h2>1. ¿Cuál es el gas que utilizan las plantas durante la fotosíntesis?</h2>
+                <label><input type="radio" name="q1" value="a"> a) Oxígeno</label>
+                <label><input type="radio" name="q1" value="b"> b) Dióxido de carbono</label>
+                <label><input type="radio" name="q1" value="c"> c) Nitrógeno</label>
+                <label><input type="radio" name="q1" value="d"> d) Hidrógeno</label>
+            </div>
+            <div class="question">
+                <h2>2. ¿Cuál es la unidad fundamental de la vida?</h2>
+                <label><input type="radio" name="q2" value="a"> a) Tejido</label>
+                <label><input type="radio" name="q2" value="b"> b) Órgano</label>
+                <label><input type="radio" name="q2" value="c"> c) Célula</label>
+                <label><input type="radio" name="q2" value="d"> d) Sistema</label>
+            </div>
+            <div class="question">
+                <h2>3. ¿Qué órgano humano es responsable de filtrar la sangre y producir orina?</h2>
+                <label><input type="radio" name="q3" value="a"> a) Corazón</label>
+                <label><input type="radio" name="q3" value="b"> b) Hígado</label>
+                <label><input type="radio" name="q3" value="c"> c) Riñones</label>
+                <label><input type="radio" name="q3" value="d"> d) Pulmones</label>
+            </div>
+            <div class="question">
+                <h2>4. ¿Qué fenómeno natural es causado por el movimiento de las placas tectónicas?</h2>
+                <label><input type="radio" name="q4" value="a"> a) Huracanes</label>
+                <label><input type="radio" name="q4" value="b"> b) Terremotos</label>
+                <label><input type="radio" name="q4" value="c"> c) Tsunamis</label>
+                <label><input type="radio" name="q4" value="d"> d) Tormentas eléctricas</label>
+            </div>
+            <div class="question">
+                <h2>5. ¿Qué planeta es conocido como el "Planeta Rojo"?</h2>
+                <label><input type="radio" name="q5" value="a"> a) Venus</label>
+                <label><input type="radio" name="q5" value="b"> b) Saturno</label>
+                <label><input type="radio" name="q5" value="c"> c) Marte</label>
+                <label><input type="radio" name="q5" value="d"> d) Júpiter</label>
+            </div>
+            <button type="button" onclick="checkAnswers()">Enviar</button>
+        </form>
+        <div id="result" class="result" style="display: none;">
+            <h2>Resultados</h2>
+            <div id="feedback"></div>
+        </div>
+    </div>
+    <script>
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'c',
+            q3: 'c',
+            q4: 'b',
+            q5: 'c'
+        };
+
+        function checkAnswers() {
+            const form = document.getElementById('quizForm');
+            const resultDiv = document.getElementById('result');
+            const feedbackDiv = document.getElementById('feedback');
+            let feedback = '';
+            let totalCorrect = 0;
+
+            for (let key in correctAnswers) {
+                const userAnswer = form.elements[key].value;
+                if (userAnswer === correctAnswers[key]) {
+                    feedback += `<p class="correct">Pregunta ${key.slice(1)}: Correcta</p>`;
+                    totalCorrect++;
+                } else {
+                    feedback += `<p class="incorrect">Pregunta ${key.slice(1)}: Incorrecta. La respuesta correcta es ${correctAnswers[key]}</p>`;
+                }
+            }
+
+            feedbackDiv.innerHTML = feedback;
+            resultDiv.style.display = 'block';
+        }
+    </script>
 </body>
-<h1>Bienvenidos</h1>
 </html>
